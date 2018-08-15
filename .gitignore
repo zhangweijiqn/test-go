@@ -1,0 +1,4 @@
+.idea
+*.go
+src/target
+src/*/*.go
