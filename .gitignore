@@ -1,2 +1,5 @@
 .idea
+.DS_Store
 src/target
+src/.DS_Store
+src/tmp.txt
