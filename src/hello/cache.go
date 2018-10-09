@@ -66,8 +66,8 @@ func main() {
 	var structValue = cacheValue{0.8, timestamp}
 	c.Set("foo", &structValue, cache.DefaultExpiration)
 	if x, found := c.Get("foo"); found {
-		foo := x.(*cacheValue)
-		fmt.Println(foo)
+		foo := &(x.(*cacheValue).ctr)
+		fmt.Println(*foo)
 		// ...
 	}
 }

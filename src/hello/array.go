@@ -70,6 +70,36 @@ func add_element_to_slice() {
 	slice := append([]int{1, 2, 3}, a...)
 	fmt.Println(slice) //[1 2 3 4 5 6]
 	//将字符串当作[]byte类型作为第二个参数传入
+
+	fmt.Println(len(slice))
+	var b []int = nil
+	slice = append(slice, b...) //nil元素不会被append
+	fmt.Println(len(slice))
+
+	var aaa []*string
+	var temp = "aaa"
+	aaa = append(aaa, &temp)
+	fmt.Println(len(aaa))
+	fmt.Println(aaa)
+	aaa = append(aaa, nil) //nil会占用一个位置
+	fmt.Println(len(aaa))
+	fmt.Println(aaa)
+
+	tokens := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}
+	contentProfileWindowSize := 5
+	batches := len(tokens)/contentProfileWindowSize + 1
+	fmt.Println(batches)
+	for i := 0; i < batches; i = i + 1 {
+		start := i * contentProfileWindowSize
+		end := (i + 1) * contentProfileWindowSize
+		if end > len(tokens) {
+			end = len(tokens)
+		}
+		if start == end {
+			continue
+		}
+		fmt.Printf("%d:%d, %v\n", start, end, tokens[start:end])
+	}
 }
 
 func main() {

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/golang/protobuf/proto"
+	"strconv"
 )
 
 type ItemType int32
@@ -44,6 +45,10 @@ func (x *ItemType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type cacheValue struct {
+	itemType *ItemType
+}
+
 func main() {
 	var i = ItemType_VIDEO
 	fmt.Println(i)
@@ -52,4 +57,11 @@ func main() {
 	fmt.Printf("%d\n", i)
 	fmt.Println(1 == i)
 	fmt.Println(int32(i))
+	fmt.Println(strconv.Itoa(int(i)))
+	s := fmt.Sprintf("%s[%d][%v][%i]", i, i, i, i)
+	fmt.Println(s)
+
+	cV := cacheValue{&i}
+	s = fmt.Sprintf("%s[%d][%v][%i]", *cV.itemType, *cV.itemType, *cV.itemType, *cV.itemType)
+	fmt.Println(s)
 }

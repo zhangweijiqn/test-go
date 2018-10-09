@@ -6,7 +6,9 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sort"
+	"time"
 )
 
 //对任意对象进行排序
@@ -62,4 +64,28 @@ func main() {
 
 	/*output:
 	[( Amy,19 ) ( Hanks,19 ) ( Tom,19 ) ( Tom,20 ) ( Jogn,21 ) ( Mike,23 )] */
+
+	shuffle_swap(10)
+}
+
+func shuffle_swap(m int) { //洗牌 //换牌法
+	//生成m张牌
+	var arr = make([]int, m)
+	for i := 0; i < m; i++ {
+		arr[i] = i
+	}
+	fmt.Println(arr)
+	r := rand.New(rand.NewSource(time.Now().Unix()))
+	//第i张与任意一张牌换位子，换完一轮即可
+	for i := 0; i < m; i++ {
+		rnd := r.Intn(m)
+		if rnd < i {
+			continue // //如果rnd比当前的i小,就跳过
+		}
+		temp := arr[rnd]
+		arr[rnd] = arr[i]
+		arr[i] = temp
+		fmt.Println(i, " exchange ", rnd)
+	}
+	fmt.Println(arr)
 }
