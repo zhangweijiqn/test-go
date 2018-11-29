@@ -45,7 +45,7 @@ func (x *ItemType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type cacheValue struct {
+type cacheValues struct {
 	itemType *ItemType
 }
 
@@ -61,7 +61,7 @@ func main() {
 	s := fmt.Sprintf("%s[%d][%v][%i]", i, i, i, i)
 	fmt.Println(s)
 
-	cV := cacheValue{&i}
+	cV := cacheValues{&i}
 	s = fmt.Sprintf("%s[%d][%v][%i]", *cV.itemType, *cV.itemType, *cV.itemType, *cV.itemType)
 	fmt.Println(s)
 }
