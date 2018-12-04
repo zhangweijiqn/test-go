@@ -15,13 +15,9 @@ func getCurrentTimestamp() int64 {
 	return timestampInt
 }
 
-func GetNow() int64 {
-	return time.Now().Unix()
-}
-
 func main() {
 	data := math.Log10(0)
 	fmt.Println(data)
 	fmt.Println(getCurrentTimestamp())
-	fmt.Println(GetNow())
+	fmt.Println(time.Now().Unix())
 }

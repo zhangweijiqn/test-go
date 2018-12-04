@@ -66,6 +66,10 @@ func add_element_to_slice() {
 	a = append(a, 2, 3, 4)
 	printSlice("a", a)
 
+	// append array
+	var aa = []int{4,5,6}
+	a = append(a, aa...)	//直接append aa是不可以的
+
 	//第二个参数也可以直接写另一个切片，将它里面所有元素拷贝追加到第一个切片后面。要注意的是，这种用法函数的参数只能接收两个slice，并且末尾要加三个点
 	slice := append([]int{1, 2, 3}, a...)
 	fmt.Println(slice) //[1 2 3 4 5 6]

@@ -41,11 +41,10 @@ func adder() func(int) int { //Go 函数可以是闭包的。闭包是一个函�
 }
 
 func test_gofunc() int {
-	value := 0
+	value := 1
 	go func() { //异步执行，会先return，后台会执行（主线程存活的前提下）
 		for i := range time.Tick(1e6) {
-			value = i.Second()
-			fmt.Printf("cur conn num: %d\n", i)
+			fmt.Printf("cur conn num: %v, %d\n", i.Second(), value)
 		}
 	}()
 	return value
