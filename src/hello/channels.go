@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 func sum(a []int, c chan int) {
 	sum := 0
@@ -10,7 +13,7 @@ func sum(a []int, c chan int) {
 	c <- sum // 将和送入 c
 }
 
-func main() {
+func test() {
 	// test channel
 	a := []int{7, 2, 8, -9, 4, 0}
 
@@ -68,3 +71,38 @@ func fibonacci(n int, c chan int) {
 	默认情况下，在另一端准备好之前，发送和接收都会阻塞。这使得 goroutine 可以在没有明确的锁或竞态变量的情况下进行同步。
 
 */
+
+func worker(jobs <-chan int) {
+	for j := range jobs { //会一直监听channel中消息
+		fmt.Println("started  job", j)
+		time.Sleep(3 * time.Second)
+		//fmt.Println("finished job", j)
+	}
+}
+
+func main() {
+	//reference : https://gobyexample.com/worker-pools
+
+	jobs := make(chan int, 20) //缓冲数，设置为并发的2倍
+	//
+	for j := 1; j <= 10; j++ { //work数量，并发数
+		go worker(jobs)
+	}
+	//time.Sleep(time.Second * 1)
+	//fmt.Printf("len = %v", len(jobs))
+
+	for j := 1; j <= 50; j++ {
+		fmt.Printf("i=%d\n", j)
+		jobs <- j
+	}
+
+	println("dddd")
+
+	for len(jobs) > 0 {
+		time.Sleep(1 * time.Second)
+	}
+
+	println("done")
+	time.Sleep(time.Second * 10) //保证主进程还在执行，否则gorutine进程会挂
+	close(jobs)
+}

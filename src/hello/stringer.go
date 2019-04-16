@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 type Person struct {
@@ -29,8 +31,15 @@ func main() {
 		fmt.Printf("%v: %v\n", n, a)
 	}
 
+	aaa := "aaaabbb"
+	fmt.Println(strings.Index(aaa, "ab"))
+	fmt.Println(strings.Index(aaa, "abc"))
+
 	// test %v
 	TestFormat()
+
+	var urlToken int64
+	fmt.Println(strconv.FormatInt(urlToken, 10))
 }
 
 type Power struct {

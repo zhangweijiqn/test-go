@@ -20,10 +20,23 @@ func test_range2() {
 	}
 }
 
+func test_list() {
+	var pow = []int{1, 2, 4, 8, 16, 32, 64, 128}
+	fmt.Printf("c%v\n", pow)
+	pow = pow[2:]
+	fmt.Printf("b%v\n", pow)
+	pow = nil
+	for idx, item := range pow {
+		fmt.Printf("a %v, %v\n", idx, item)
+	}
+}
+
 func main() {
 
 	test_range1() //
 
 	test_range2() //nil, value
+
+	test_list()
 
 }

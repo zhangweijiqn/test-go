@@ -8,6 +8,7 @@ import (
 
 const (
 	DateTime     = "2006-01-02 15:04:05"
+	DateTime2    = "2006-01-02 1504"
 	Date         = "20060102"
 	DateClock    = "2006010215"
 	DayDuration  = 24 * time.Hour
@@ -22,6 +23,10 @@ func GetNow() int64 {
 
 func GetNowInMilliSecond() int64 {
 	return time.Now().UnixNano() / (int64(time.Millisecond) / int64(time.Nanosecond))
+}
+
+func GetDayInMilliSecond(t time.Time) int64 {
+	return t.UnixNano() / (int64(time.Millisecond) / int64(time.Nanosecond))
 }
 
 func ToDateClock(timestamp int64) string {
@@ -85,4 +90,7 @@ func GetTimeIndexByMinutes(k int) int {
 
 func main() {
 	fmt.Println("time now: ", GetNow())
+	fmt.Println("time now: ", GetNowInMilliSecond())
+	t, err := ToTimeInFormat("2019-04-12 1200", DateTime2)
+	fmt.Println("time now: ", GetDayInMilliSecond(t), err)
 }
