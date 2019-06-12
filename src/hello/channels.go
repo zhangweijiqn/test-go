@@ -80,6 +80,21 @@ func worker(jobs <-chan int) {
 	}
 }
 
+func testRange() {
+	var ch = make(chan string, 2)
+	go func() {
+		for i := 0; i < 5; i++ {
+			time.Sleep(500 * time.Millisecond)
+			ch <- "hello"
+		}
+		close(ch)
+	}()
+
+	for recv := range ch { //注意go func内要调用close，否则range会阻塞
+		fmt.Println(recv)
+	}
+}
+
 func main() {
 	//reference : https://gobyexample.com/worker-pools
 
@@ -105,4 +120,6 @@ func main() {
 	println("done")
 	time.Sleep(time.Second * 10) //保证主进程还在执行，否则gorutine进程会挂
 	close(jobs)
+
+	testRange()
 }

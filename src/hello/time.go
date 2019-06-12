@@ -3,17 +3,19 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strconv"
 	"time"
 )
 
 const (
 	DateTime     = "2006-01-02 15:04:05"
-	DateTime2    = "2006-01-02 1504"
-	Date         = "20060102"
+	DateTime2    = "2006-01-02 150400"
+	Date         = "2006-01-02"
+	Date2        = "2006-01-02 1504"
 	DateClock    = "2006010215"
 	DayDuration  = 24 * time.Hour
 	WeekDuration = 7 * 24 * time.Hour
-	Second2500   = 16725196800 // 2100-01-01 时间戳， 如果超过这个时间认为不再是秒
+	Second2500   = 16725196800 // 2500-01-01 时间戳， 如果超过这个时间认为不再是秒
 	DaySecond    = 86400
 )
 
@@ -46,7 +48,8 @@ func ToDateTimeInFormat(timestamp int64, format string) string {
 }
 
 func ToTimeInFormat(datetime string, format string) (time.Time, error) {
-	return time.Parse(format, datetime)
+	loc, _ := time.LoadLocation("Local")
+	return time.ParseInLocation(format, datetime, loc)
 }
 
 func ToLocalTimeInFormat(datetime string, format string) (time.Time, error) {
@@ -74,6 +77,10 @@ func GetDayToNow(timestampSecond int64) (int64, error) {
 	return (time.Now().Unix() - timestampSecond) / 86400, nil
 }
 
+func GetTimeFromTimestamp(timestamp int64) string {
+	return time.Unix(timestamp, 0).Format(DateTime)
+}
+
 // 距今时间的一个 Unix 时间戳
 func GetUnixTimestampToNow(years, months, days int) int64 {
 	return time.Now().AddDate(years, months, days).Unix()
@@ -91,6 +98,11 @@ func GetTimeIndexByMinutes(k int) int {
 func main() {
 	fmt.Println("time now: ", GetNow())
 	fmt.Println("time now: ", GetNowInMilliSecond())
-	t, err := ToTimeInFormat("2019-04-12 1200", DateTime2)
-	fmt.Println("time now: ", GetDayInMilliSecond(t), err)
+	t, err := ToTimeInFormat("2019-04-17 15:00:00", DateTime)
+	fmt.Printf("====== %v\n", t.Second())
+	fmt.Println("time: ", GetDayInMilliSecond(t), err)
+	fmt.Printf("%v\n", GetDayInMilliSecond(time.Now()))
+	fmt.Printf("%v\n", GetTimeFromTimestamp(1558317600000/1000))
+	fmt.Printf("%v\n", len(strconv.Itoa(time.Unix(1558487345000/1000, 0).Hour())))
+	fmt.Printf("%v, %v\n", time.Now().UnixNano(), GetDayInMilliSecond(t))
 }
